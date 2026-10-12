@@ -1,0 +1,75 @@
+<!doctype html>
+<!-- popup.html
+     Copyright © 2026 avenged110.
+     SPDX-License-Identifier: GPL-3.0-only -->
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  :root { --bg: #fff; --text: #202124; --muted: #666; --line: #dadce0; --field: #fff; --btn: #e3e6ea; --btn-hover: #d6dade; --primary: #2663eb; --primary-hover: #1d55d6; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #292a2d; --text: #e8eaed; --muted: #9aa0a6; --line: #4a4d51; --field: #202124; --btn: #44474c; --btn-hover: #505358; --primary: #3b78f0; --primary-hover: #4b84f2; } }
+  body { background: var(--bg); color: var(--text); margin: 0; padding: 14px 16px; font: 13px -apple-system, system-ui, sans-serif; width: 290px; text-align: center; }
+  button { width: 100%; padding: 8px 0; font: inherit; font-weight: 600; border: 0; border-radius: 6px; background: var(--primary); color: #fff; cursor: pointer; white-space: nowrap; }
+  button:hover { background: var(--primary-hover); }
+  button.secondary { background: var(--btn); color: var(--text); }
+  button.secondary:hover { background: var(--btn-hover); }
+  button.fit { width: auto; padding: 0 14px; flex: none; }
+  button.small { width: auto; padding: 2px 10px; font-size: 12px; flex: none; }
+  /* Disabled keeps its own fill, just faded, so it never blends into the background. */
+  button:disabled, button:disabled:hover { opacity: .6; cursor: default; }
+  button.secondary:disabled, button.secondary:disabled:hover { background: var(--btn); }
+  button:not(.secondary):disabled, button:not(.secondary):disabled:hover { background: var(--primary); }
+  .status { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; }
+  .status p { margin: 0; }
+  [hidden] { display: none !important; }
+  p:empty { display: none; }
+  p { margin: 8px 0 0; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .row { display: flex; gap: 8px; margin-top: 8px; }
+  hr { border: 0; border-top: 1px solid var(--line); margin: 14px 0; }
+  h2 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 0 0 8px; text-align: left; }
+  input, select { width: 100%; min-width: 0; box-sizing: border-box; font: inherit; padding: 5px 6px; border: 1px solid var(--line); border-radius: 6px; background: var(--field); color: inherit; color-scheme: light dark; }
+</style>
+</head>
+<body>
+  <button id="save">Save Tab URLs</button>
+  <p id="lastSave">Last saved: never</p>
+
+  <div class="row">
+    <select id="backups" disabled></select>
+    <button id="restore" class="secondary fit" disabled>Restore</button>
+  </div>
+  <p id="restoreMsg"></p>
+
+  <hr>
+  <h2>Automatic saving</h2>
+  <div class="row">
+    <select id="repeat">
+      <option value="once">Once</option>
+      <option value="hourly">Every hour</option>
+      <option value="daily">Every day</option>
+      <option value="weekly">Every week</option>
+    </select>
+  </div>
+  <div class="row"><input id="when" type="datetime-local" title="When to save (or start saving)"></div>
+  <div class="row">
+    <button id="schedule" class="secondary">Add Schedule</button>
+    <button id="unschedule" class="secondary" disabled>Clear</button>
+  </div>
+  <p id="next">Not scheduled</p>
+
+  <hr>
+  <h2>Text files</h2>
+  <button id="export" class="secondary">Export URLs</button>
+  <p id="last">Last export: never</p>
+  <div class="row">
+    <button id="import" class="secondary">Import</button>
+    <button id="reopen" class="secondary" disabled>Reopen All Tabs</button>
+  </div>
+  <div class="status">
+    <p id="loaded">No file imported</p>
+    <button id="unload" class="secondary small" hidden>Clear</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
