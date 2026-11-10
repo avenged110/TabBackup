@@ -8,7 +8,7 @@ A crude Chromium extension for saving and restoring all existing tabs.
 - Optionally export the tabs as a list of URLs in a plain text document. Restoration can then be performed from one of these text documents.
 - Enable "Allow in Incognito" if you want it to include URLs from Incognito mode windows.
 
-If Chromium decides not to correctly restore tabs after being quit in any manner other than exactly how it wanted, this holds a persistent copy of every URL for restoration. Would've saved me a lot of irritation had I bothered with this years ago.
+If Chromium decides not to correctly restore tabs after being quit in any manner other than exactly how it wanted, this holds a persistent copy of every URL for restoration. I could've been spared a lot of irritation if I had bothered with this years ago.
 
 ## Installation
 
@@ -18,7 +18,7 @@ Unzip the extension and place the folder somewhere permanent. Navigate to chrome
 
 If you find a bug, please report it here on GitHub and I will try to fix it. Please be as thorough in your reporting as you can.
 
-You're welcome to request features or changes if you're so-inclined, and I will give such requests due consideration, but just know that this application was built first and foremost for an audience of one and I consider it feature-complete at this time.
+You're welcome to request features or changes if you're so-inclined, and I will give such requests due consideration, but just know that this extension was built first and foremost for an audience of one and I consider it feature-complete at this time.
 
 TabBackup is available in English only, by design.
 
@@ -29,4 +29,3 @@ I am not a software engineer; all of the code for this project was written by An
 ## License
 
 TabBackup is free software, licensed under the GNU General Public License, version 3 only (GPL-3.0-only). Copyright © 2026 avenged110. The full license text is in `COPYING`.
-

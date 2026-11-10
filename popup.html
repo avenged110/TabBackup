@@ -6,19 +6,32 @@
 <head>
 <meta charset="utf-8">
 <style>
-  :root { --bg: #fff; --text: #202124; --muted: #666; --line: #dadce0; --field: #fff; --btn: #e3e6ea; --btn-hover: #d6dade; --primary: #2663eb; --primary-hover: #1d55d6; }
-  @media (prefers-color-scheme: dark) { :root { --bg: #292a2d; --text: #e8eaed; --muted: #9aa0a6; --line: #4a4d51; --field: #202124; --btn: #44474c; --btn-hover: #505358; --primary: #3b78f0; --primary-hover: #4b84f2; } }
+  :root { --bg: #fff; --text: #202124; --muted: #666; --line: #dadce0; --field: #fff; --btn: #e3e6ea; --btn-hover: #d6dade; --primary: #2663eb; --primary-hover: #1d55d6; --focus: rgba(47,111,222,.35); }
+  @media (prefers-color-scheme: dark) { :root { --bg: #292a2d; --text: #e8eaed; --muted: #9aa0a6; --line: #4a4d51; --field: #202124; --btn: #44474c; --btn-hover: #505358; --primary: #3b78f0; --primary-hover: #4b84f2; --focus: rgba(91,147,245,.45); } }
   body { background: var(--bg); color: var(--text); margin: 0; padding: 14px 16px; font: 13px -apple-system, system-ui, sans-serif; width: 290px; text-align: center; }
-  button { width: 100%; padding: 8px 0; font: inherit; font-weight: 600; border: 0; border-radius: 6px; background: var(--primary); color: #fff; cursor: pointer; white-space: nowrap; }
-  button:hover { background: var(--primary-hover); }
-  button.secondary { background: var(--btn); color: var(--text); }
-  button.secondary:hover { background: var(--btn-hover); }
-  button.fit { width: auto; padding: 0 14px; flex: none; }
-  button.small { width: auto; padding: 2px 10px; font-size: 12px; flex: none; }
-  /* Disabled keeps its own fill, just faded, so it never blends into the background. */
-  button:disabled, button:disabled:hover { opacity: .6; cursor: default; }
-  button.secondary:disabled, button.secondary:disabled:hover { background: var(--btn); }
-  button:not(.secondary):disabled, button:not(.secondary):disabled:hover { background: var(--primary); }
+  /* Buttons drawn like macOS push buttons: the default (primary) button is the blue accent, secondary
+     buttons are the neutral face with a hairline edge and soft drop shadow. */
+  button { width: 100%; height: 24px; padding: 0 12px; font: inherit; font-size: 13px; font-weight: 500; border: none; border-radius: 6px; cursor: default; white-space: nowrap;
+    background: linear-gradient(#3a85f7, #1f6ef0); color: #fff;
+    box-shadow: inset 0 0.5px 0 rgba(255,255,255,.25), 0 0 0 0.5px rgba(0,0,0,.12), 0 0.5px 1.5px rgba(0,0,0,.2); }
+  button:active { background: linear-gradient(#2a6fe0, #155ad4); }
+  button.secondary { background: #fff; color: var(--text); box-shadow: 0 0 0 0.5px rgba(0,0,0,.18), 0 0.5px 1.5px rgba(0,0,0,.18); }
+  button.secondary:active { background: #f0f0f2; }
+  button.fit { width: auto; flex: none; }
+  button.small { width: auto; height: 20px; padding: 0 9px; font-size: 12px; border-radius: 5px; flex: none; }
+  button:focus-visible, select:focus-visible { outline: none; box-shadow: 0 0 0 0.5px rgba(0,0,0,.18), 0 0 0 3px var(--focus); }
+  /* Disabled keeps its own face, just faded, so it never blends into the background. */
+  button:disabled, button:disabled:active { opacity: .5; }
+  button.secondary:disabled:active { background: #fff; }
+  button:not(.secondary):disabled:active { background: linear-gradient(#3a85f7, #1f6ef0); }
+  @media (prefers-color-scheme: dark) {
+    button { box-shadow: inset 0 0.5px 0 rgba(255,255,255,.2), 0 0 0 0.5px rgba(0,0,0,.35), 0 0.5px 1.5px rgba(0,0,0,.3); }
+    button.secondary { background: #5c5c61; box-shadow: inset 0 0.5px 0 rgba(255,255,255,.16), 0 0 0 0.5px rgba(0,0,0,.35), 0 0.5px 1.5px rgba(0,0,0,.3); }
+    button.secondary:active { background: #6a6a70; }
+    button.secondary:disabled:active { background: #5c5c61; }
+    button:focus-visible, select:focus-visible { box-shadow: inset 0 0.5px 0 rgba(255,255,255,.16), 0 0 0 0.5px rgba(0,0,0,.35), 0 0 0 3px var(--focus); }
+  }
+  h2 .note { font-size: 9.5px; font-weight: 500; text-transform: none; letter-spacing: 0; }
   .status { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; }
   .status p { margin: 0; }
   [hidden] { display: none !important; }
@@ -27,7 +40,24 @@
   .row { display: flex; gap: 8px; margin-top: 8px; }
   hr { border: 0; border-top: 1px solid var(--line); margin: 14px 0; }
   h2 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 0 0 8px; text-align: left; }
-  input, select { width: 100%; min-width: 0; box-sizing: border-box; font: inherit; padding: 5px 6px; border: 1px solid var(--line); border-radius: 6px; background: var(--field); color: inherit; color-scheme: light dark; }
+  input { width: 100%; min-width: 0; box-sizing: border-box; font: inherit; padding: 5px 6px; border: 1px solid var(--line); border-radius: 6px; background: var(--field); color: inherit; color-scheme: light dark; }
+  /* Pickers drawn like macOS pop-up buttons (matches WebStyle): neutral face, hairline edge, up/down chevrons. */
+  select {
+    --chevrons: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 12'%3E%3Cpath d='M1.5 4.5 4 2l2.5 2.5M1.5 7.5 4 10l2.5-2.5' fill='none' stroke='%23505055' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    width: 100%; min-width: 0; height: 24px; padding: 0 25px 0 9px; border: none; border-radius: 6px; appearance: none; cursor: default;
+    background: #fff var(--chevrons) right 7px center / 7px 11px no-repeat;
+    box-shadow: 0 0 0 0.5px rgba(0,0,0,.18), 0 0.5px 1.5px rgba(0,0,0,.18);
+    color: var(--text); font: inherit; font-size: 13px; text-align: left; color-scheme: light dark; }
+  select:active { background-color: #f0f0f2; }
+  select:disabled { opacity: .5; }
+  select option { color: initial; }
+  @media (prefers-color-scheme: dark) {
+    select {
+      --chevrons: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 12'%3E%3Cpath d='M1.5 4.5 4 2l2.5 2.5M1.5 7.5 4 10l2.5-2.5' fill='none' stroke='%23d8d8dc' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-color: #5c5c61;
+      box-shadow: inset 0 0.5px 0 rgba(255,255,255,.16), 0 0 0 0.5px rgba(0,0,0,.35), 0 0.5px 1.5px rgba(0,0,0,.3); }
+    select:active { background-color: #6a6a70; }
+  }
 </style>
 </head>
 <body>
@@ -41,7 +71,7 @@
   <p id="restoreMsg"></p>
 
   <hr>
-  <h2>Automatic saving</h2>
+  <h2>Automatic backup <span class="note">(Internal storage)</span></h2>
   <div class="row">
     <select id="repeat">
       <option value="once">Once</option>
@@ -58,7 +88,7 @@
   <p id="next">Not scheduled</p>
 
   <hr>
-  <h2>Text files</h2>
+  <h2>Manual export <span class="note">(.txt file)</span></h2>
   <button id="export" class="secondary">Export URLs</button>
   <p id="last">Last export: never</p>
   <div class="row">

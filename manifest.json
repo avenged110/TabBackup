@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "TabBackup",
-  "version": "1.0",
-  "description": "Saves every open tab, grouped by window, to on-disk backups you can restore. Can also export and import .txt files.",
+  "version": "1.0.1",
+  "description": "Save every open tab's URL, grouped by window, to on-disk backups that can be restored. Automatic and manual backups with plain text export and import.",
   "permissions": [
     "tabs",
     "storage",
